@@ -39,7 +39,19 @@ func RunSubscriber() *cobra.Command {
 		Use:   "sub",
 		Short: "Run Pimview Test Publisher",
 		Run: func(cmd *cobra.Command, args []string) {
+			//ticker := time.NewTicker(30 * time.Second)
+			//done := make(chan struct{})
+			//
+			//for {
 			subscriber.Run()
+
+			//	select {
+			//	case <-done:
+			//		return
+			//	case <-ticker.C:
+			//		log.Println("redo")
+			//	}
+			//}
 		},
 	}
 

@@ -7,13 +7,14 @@ import (
 )
 
 func Publish() {
-	client := mqtt.GetClient("pimviewpub")
+	client := mqtt.GetClient("pimviewpub1")
 
-	num := 10
-	for i := 0; i < num; i++ {
-		text := fmt.Sprintf("Message %d", i)
-		token := client.Publish("topic/test", 0, false, text)
-		token.Wait()
-		time.Sleep(time.Second)
-	}
+	//num := 10
+	//for i := 0; i < num; i++ {
+	//text := fmt.Sprintf("Message %d", i)
+	text := fmt.Sprintf("its working")
+	token := client.Publish("topic/test", 0, false, text)
+	token.Wait()
+	time.Sleep(time.Second)
+	//}
 }
