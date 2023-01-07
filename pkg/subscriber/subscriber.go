@@ -2,58 +2,26 @@ package subscriber
 
 import (
 	"fmt"
+	pahomqtt "github.com/eclipse/paho.mqtt.golang"
 	mqtt "pimview.thelabshack.com/pkg/mqtt"
+	webos "pimview.thelabshack.com/pkg/webos"
 	"time"
 )
 
-// TODO: Intermittent mtqq from websockets being received, see why (its running on localhost)
 func Run() {
-	client := mqtt.GetClient("pimview-webos-sub")
+	webos := webos.New()
+	client := mqtt.GetClient("pimview")
 
-	topic := "topic/test"
-	token := client.Subscribe(topic, 1, nil)
-	token.Wait()
-	fmt.Printf("Subscribed to topic %s", topic)
-	time.Sleep(time.Second * 30)
-
-	client.Disconnect(250)
+	for {
+		//Sub to mqtt topic (clean up later)
+		Subscribe(client, webos.ProcessMessages)
+	}
 }
 
-//func Run() {
-//
-//	//ticker := time.NewTicker(30 * time.Second)
-//	//done := make(chan struct{})
-//	//
-//	//for {
-//	client := mqtt.GetClient("pimview-webos-sub")
-//	//Subscribe(client)
-//	topic := "topic/test"
-//	token := client.Subscribe(topic, 1, nil)
-//	token.Wait()
-//	fmt.Printf("Subscribed to topic %s", topic)
-//	time.Sleep(time.Second * 10)
-//	client.Disconnect(250)
-//	//
-//	//	select {
-//	//	case <-done:
-//	//		return
-//	//	case <-ticker.C:
-//	//	}
-//	//}
-//
-//	//time.Sleep(time.Second * 30)
-//
-//}
-//
-//func Subscribe(c *pahomqtt.Client) {
-//
-//	//client := mqtt.GetClient("pimviewsub")
-//
-//	//topic := "topic/test"
-//	//token := client.Subscribe(topic, 1, nil)
-//	//token.Wait()
-//	//fmt.Printf("Subscribed to topic %s", topic)
-//	//time.Sleep(time.Second * 10)
-//	//
-//	//client.Disconnect(250)
-//}
+func Subscribe(cc pahomqtt.Client, handler pahomqtt.MessageHandler) {
+	topic := "webos/volume"
+	token := cc.Subscribe(topic, 1, handler)
+	token.Wait()
+	fmt.Printf("Subscribed to topic %s", topic)
+	time.Sleep(time.Second * 120)
+}
