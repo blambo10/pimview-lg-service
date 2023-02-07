@@ -10,7 +10,7 @@ import (
 
 func Run() {
 	webos := webos.New()
-	client := mqtt.GetClient("pimview")
+	client := mqtt.GetClient("pimview-lg")
 
 	for {
 		//Sub to mqtt topic (clean up later)

@@ -81,7 +81,7 @@ func (w *WebOS) ProcessMessages(client mqtt.Client, message mqtt.Message) {
 // direction mqtt message payload
 func (w *WebOS) Volume(direction []byte) {
 	d := string(direction)
-
+	fmt.Println("client key:", w.ClientKey)
 	switch d {
 	case up:
 		fmt.Println("Volume UP")
@@ -91,7 +91,12 @@ func (w *WebOS) Volume(direction []byte) {
 		}
 	case down:
 		fmt.Println("Volume DOWN")
-		err := w.TV.VolumeDown()
+		err := w.TV.AuthoriseClientKey(w.ClientKey)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		err = w.TV.VolumeDown()
 
 		if err != nil {
 			fmt.Println(err)
