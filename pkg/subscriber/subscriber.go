@@ -9,7 +9,9 @@ import (
 )
 
 func Run() {
-	webos := webos.New()
+
+	webos, _ := webos.New()
+
 	client := mqtt.GetClient("pimview-lg")
 
 	for {

@@ -3,19 +3,23 @@ package webos
 import (
 	"crypto/tls"
 	"fmt"
+	webos "github.com/blambo10/go-webos"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"github.com/gorilla/websocket"
-	"github.com/kaperys/go-webos"
-	_ "github.com/kaperys/go-webos"
 	"log"
 	"net"
+	"pimview.thelabshack.com/pkg/config"
 	"strings"
 	"time"
 )
 
+//"github.com/kaperys/go-webos"
+//_ "github.com/kaperys/go-webos"
+
 type WebOS struct {
 	TV        *webos.TV
 	ClientKey string
+	Host      string
 }
 
 const (
@@ -25,7 +29,9 @@ const (
 	mute   = "mute"
 )
 
-func New() *WebOS {
+func New() (*WebOS, error) {
+	cfg := config.GetWebOS()
+
 	dialer := websocket.Dialer{
 		HandshakeTimeout: 10 * time.Second,
 		// the TV uses a self-signed certificate
@@ -33,9 +39,10 @@ func New() *WebOS {
 		NetDial:         (&net.Dialer{Timeout: time.Second * 500}).Dial,
 	}
 
-	tv, err := webos.NewTV(&dialer, "192.168.1.36")
+	tv, err := webos.NewTV(&dialer, cfg.Host)
 	if err != nil {
-		log.Fatalf("could not dial TV: %v", err)
+		fmt.Println("could not dial TV: %v", err)
+		return nil, fmt.Errorf("cannot connect to tv")
 	}
 	//defer tv.Close()
 
@@ -57,10 +64,12 @@ func New() *WebOS {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	return &WebOS{
 		TV:        tv,
 		ClientKey: key,
-	}
+		Host:      cfg.Host,
+	}, nil
 }
 
 // ProcessMessages process mqtt message queue and dispatch to handlers

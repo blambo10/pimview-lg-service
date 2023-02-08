@@ -5,17 +5,17 @@ go 1.19
 require (
 	github.com/eclipse/paho.mqtt.golang v1.4.2
 	github.com/gobuffalo/envy v1.10.2
-	github.com/kaperys/go-webos v0.0.0-20190815081811-44d344588ff2
+	github.com/gorilla/websocket v1.5.0
 	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/cobra v1.6.1
 )
 
 require (
-	github.com/gorilla/websocket v1.4.2 // indirect
+	github.com/blambo10/go-webos v0.0.0-20230208081713-f775c3b17c8f // indirect
 	github.com/inconshreveable/mousetrap v1.0.1 // indirect
 	github.com/joho/godotenv v1.4.0 // indirect
-	github.com/mitchellh/mapstructure v0.0.0-20180715050151-f15292f7a699 // indirect
-	github.com/pkg/errors v0.8.0 // indirect
+	github.com/mitchellh/mapstructure v1.5.0 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rogpeppe/go-internal v1.9.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	golang.org/x/net v0.0.0-20200425230154-ff2c4b7c35a0 // indirect

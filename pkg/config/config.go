@@ -9,6 +9,7 @@ import (
 type Config struct {
 	logging Logging
 	mqtt    MQTT
+	webos   WebOS
 }
 
 type MQTT struct {
@@ -17,6 +18,10 @@ type MQTT struct {
 	Username string
 	Password string
 	ClientID string
+}
+
+type WebOS struct {
+	Host string
 }
 
 type Logging struct {
@@ -57,6 +62,9 @@ func NewConfig() *Config {
 			Password: envy.Get("MQTT_BROKER_PASSWORD", ""),
 			ClientID: envy.Get("MQTT_BROKER_CLIENTID", "pimview-test"),
 		},
+		webos: WebOS{
+			Host: envy.Get("WEB_OS_ADDRESS", ""),
+		},
 	}
 }
 
@@ -66,4 +74,8 @@ func GetLogger() Logging {
 
 func GetMQTT() MQTT {
 	return NewConfig().mqtt
+}
+
+func GetWebOS() WebOS {
+	return NewConfig().webos
 }
