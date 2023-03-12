@@ -60,7 +60,7 @@ func NewConfig() *Config {
 			Port:     port,
 			Username: envy.Get("MQTT_BROKER_USERNAME", ""),
 			Password: envy.Get("MQTT_BROKER_PASSWORD", ""),
-			ClientID: envy.Get("MQTT_BROKER_CLIENTID", "pimview-test"),
+			ClientID: envy.Get("MQTT_BROKER_CLIENTID", "pimview-lg"),
 		},
 		webos: WebOS{
 			Host: envy.Get("WEB_OS_ADDRESS", ""),
